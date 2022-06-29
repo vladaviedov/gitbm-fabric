@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "getinthebucketmod",
+  "version": "${version}",
+  "name": "Get In The Bucket Mod",
+  "description": "Mod that allows you to put mobs into buckets",
+  "authors": [
+    "Vladyslav Aviedov"
+  ],
+  "contact": {
+    "homepage": "https://github.com/vladaviedov",
+    "issues": "https://github.com/vladaviedov/gitbm-fabric/issues",
+    "sources": "https://github.com/vladaviedov/gitbm-fabric"
+  },
+  "license": "MIT",
+  "icon": "assets/getinthebucketmod/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "vladaviedov.getinthebucketmod.Main"
+      }
+    ]
+  },
+  "mixins": [
+    "mod_id.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.13.3",
+    "fabric": "*",
+    "fabric-language-kotlin": ">=1.7.4+kotlin.1.6.21",
+    "minecraft": "1.18.x",
+    "java": ">=17"
+  }
+}
