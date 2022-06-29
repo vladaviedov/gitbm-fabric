@@ -1,4 +1,5 @@
 package vladaviedov.getinthebucketmod
+
 import net.fabricmc.api.ModInitializer
 
 object Main : ModInitializer {

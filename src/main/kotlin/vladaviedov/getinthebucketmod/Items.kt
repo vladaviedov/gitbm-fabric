@@ -106,7 +106,7 @@ object Items {
 	public fun lookup(type: EntityType<in Nothing>): Item {
 		val item: Item? = itemLookup.get(type);
 		if (item == null)
-			return generic;
+		return generic;
 
 		return item;
 	}
