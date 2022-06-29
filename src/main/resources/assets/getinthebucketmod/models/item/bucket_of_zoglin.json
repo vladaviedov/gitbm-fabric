@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "getinthebucketmod:item/bucket_of_zoglin"
+  }
+}
