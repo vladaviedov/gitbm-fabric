@@ -42,7 +42,7 @@ open class BucketOf(props: FabricItemSettings) : Item(props) {
 		// Fix position
 		val blockState = world.getBlockState(targetPos);
 		if (!blockState.getCollisionShape(world, targetPos).isEmpty) {
-			targetPos = targetPos.offset(trace.side.opposite);
+			targetPos = targetPos.add(trace.side.vector);
 		}
 
 		placeEntity(world, heldItem, targetPos, player);
@@ -70,8 +70,8 @@ open class BucketOf(props: FabricItemSettings) : Item(props) {
 		}
 
 		EntityType.loadEntityWithPassengers(entityData, world) { e ->
-			e.updatePosition(pos.x + 0.5, pos.y + 0.0, pos.z + 0.5);
-			while (!world.spawnEntity(e)) {
+			e.setPos(pos.x + 0.5, pos.y + 0.0, pos.z + 0.5);
+			while (!world.spawnNewEntityAndPassengers(e)) {
 				e.uuid = UUID.randomUUID();
 			}
 			e;
