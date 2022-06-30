@@ -31,14 +31,13 @@ open class BucketOf(props: FabricItemSettings) : Item(props) {
 		if (!player.canModifyAt(world, targetPos)) {
 			return TypedActionResult(ActionResult.PASS, heldItem);
 		}
+		if (world !is ServerWorld) {
+			return TypedActionResult(ActionResult.SUCCESS, heldItem);
+		}
+
 
 		player.incrementStat(Stats.USED.getOrCreateStat(this));
 		player.playSound(SoundEvents.ITEM_BUCKET_EMPTY_FISH, 1.0f, 1.0f);
-
-		// Only run spawn server side
-		if (world.isClient) {
-			return TypedActionResult(ActionResult.PASS, heldItem);
-		}
 
 		// Fix position
 		val blockState = world.getBlockState(targetPos);
@@ -46,7 +45,7 @@ open class BucketOf(props: FabricItemSettings) : Item(props) {
 			targetPos = targetPos.offset(trace.side.opposite);
 		}
 
-		placeEntity(world as ServerWorld, heldItem, targetPos, player);
+		placeEntity(world, heldItem, targetPos, player);
 		if (player.isCreative) {
 			return TypedActionResult(ActionResult.SUCCESS, heldItem);
 		}
