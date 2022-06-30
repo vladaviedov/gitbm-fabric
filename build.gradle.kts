@@ -1,7 +1,25 @@
 plugins {
     id("fabric-loom")
+	id("com.diffplug.spotless") version "6.4.2"
     val kotlinVersion: String by System.getProperties()
     kotlin("jvm").version(kotlinVersion)
+}
+
+// Spotless config
+spotless {
+	java {
+		trimTrailingWhitespace()
+		indentWithTabs()
+		endWithNewline()
+		removeUnusedImports()
+	}
+	kotlin {
+		ktfmt()
+		ktlint()
+		trimTrailingWhitespace()
+		indentWithTabs()
+		endWithNewline()
+	}
 }
 
 base {
