@@ -3,14 +3,16 @@ package vladaviedov.getinthebucketmod
 import net.minecraft.entity.EntityType
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.Registry
 import net.minecraft.util.Identifier
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
+import vladaviedov.getinthebucketmod.item.BucketOf
+import vladaviedov.getinthebucketmod.item.VanillaBucketOf
 
 object Items {
 
 	private val itemLookup = HashMap<EntityType<in Nothing>, Item>();
-	public val generic = Item(FabricItemSettings()
+	public val generic = BucketOf(FabricItemSettings()
 		.maxCount(1));
 
 	public fun registerItems() {
@@ -112,9 +114,9 @@ object Items {
 	}
 
 	private fun makeItem(type: EntityType<in Nothing>, name: String) {
-		val item = Item(FabricItemSettings()
+		val item = VanillaBucketOf(FabricItemSettings()
 			.group(ItemGroup.MISC)
-			.maxCount(1));
+			.maxCount(1), type);
 		Registry.register(Registry.ITEM, Identifier(Constants.MOD_ID, name), item);
 		itemLookup.put(type, item);
 	}
