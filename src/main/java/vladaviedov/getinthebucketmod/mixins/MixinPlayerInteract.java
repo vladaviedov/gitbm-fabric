@@ -4,6 +4,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
+import net.minecraft.entity.boss.dragon.EnderDragonPart;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerAbilities;
 import net.minecraft.entity.player.PlayerEntity;
@@ -37,6 +39,9 @@ public abstract class MixinPlayerInteract extends LivingEntity {
 		return null;
 	}
 
+	// Neck part name
+	private static final String NECK = "neck";
+
 	protected MixinPlayerInteract(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
 	}
@@ -48,6 +53,23 @@ public abstract class MixinPlayerInteract extends LivingEntity {
 		// Ignore
 		if (!(item.getItem() == Items.BUCKET) || isSneaking() || !target.isAlive()) {
 			return;
+		}
+
+		// Handle dragon
+		if (target.getType() == EntityType.ENDER_DRAGON) {
+			EnderDragonPart part = (EnderDragonPart)  target;
+
+			// Hitting the neck seems to not cause the "ghost" dragon bug
+			// This is the best cure I have for now, even though it's still buggy
+			if (part.world.isClient && !part.name.equals(NECK)) {
+				return;
+			}
+
+			EnderDragonEntity dragon = part.owner;
+			for (EnderDragonPart p : dragon.getBodyParts()) {
+				p.remove(RemovalReason.DISCARDED);
+			}
+			target = dragon;
 		}
 
 		if (!(target instanceof MobEntity)) {
