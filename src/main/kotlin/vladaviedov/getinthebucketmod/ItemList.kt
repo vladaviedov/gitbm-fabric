@@ -9,7 +9,7 @@ import net.minecraft.util.registry.Registry
 import vladaviedov.getinthebucketmod.item.BucketOf
 import vladaviedov.getinthebucketmod.item.VanillaBucketOf
 
-object Items {
+object ItemList {
 
 	private val itemLookup = HashMap<EntityType<in Nothing>, Item>()
 	public val generic = BucketOf(FabricItemSettings().maxCount(1))

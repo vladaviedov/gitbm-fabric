@@ -26,6 +26,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import vladaviedov.getinthebucketmod.Constants;
+import vladaviedov.getinthebucketmod.ItemList;
 
 @Mixin(PlayerEntity.class)
 public abstract class MixinPlayerInteract extends LivingEntity {
@@ -77,7 +78,7 @@ public abstract class MixinPlayerInteract extends LivingEntity {
 		}
 
 		// Get item
-		Item bucketOf = vladaviedov.getinthebucketmod.Items.INSTANCE.lookup(target.getType());
+		Item bucketOf = ItemList.INSTANCE.lookup(target.getType());
 		prepareEnt(target);
 		ItemStack itemStack = serializeEntToItem(bucketOf, target);
 
@@ -112,7 +113,7 @@ public abstract class MixinPlayerInteract extends LivingEntity {
 		}
 		itemStack.setSubNbt(Constants.UUID_TAG, NbtString.of(ent.getUuidAsString()));
 
-		if (item == vladaviedov.getinthebucketmod.Items.INSTANCE.getGeneric()) {
+		if (item == vladaviedov.getinthebucketmod.ItemList.INSTANCE.getGeneric()) {
 			NbtCompound display = new NbtCompound();
 			NbtList lore = new NbtList();
 
