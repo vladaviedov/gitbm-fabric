@@ -1,0 +1,3 @@
+[submodule "gitbm-autolang"]
+	path = gitbm-autolang
+	url = git@github.com:vladaviedov/gitbm-autolang
