@@ -1,6 +1,6 @@
 plugins {
     id("fabric-loom")
-	id("com.diffplug.spotless") version "6.4.2"
+	id("com.diffplug.spotless") version "6.19.0"
     val kotlinVersion: String by System.getProperties()
     kotlin("jvm").version(kotlinVersion)
 }
@@ -60,8 +60,6 @@ tasks {
     }
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions { jvmTarget = javaVersion.toString() }
-        sourceCompatibility = javaVersion.toString()
-        targetCompatibility = javaVersion.toString()
     }
 
     jar { from("LICENSE") { rename { "${it}_${base.archivesName}" } } }
