@@ -53,6 +53,8 @@ object ItemList {
 
 		// Hostile mobs
 		makeItem(EntityType.BLAZE, "bucket_of_blaze")
+		makeItem(EntityType.BOGGED, "bucket_of_bogged")
+		makeItem(EntityType.BREEZE, "bucket_of_breeze")
 		makeItem(EntityType.CREEPER, "bucket_of_creeper")
 		makeItem(EntityType.DROWNED, "bucket_of_drowned")
 		makeItem(EntityType.ELDER_GUARDIAN, "bucket_of_elder_guardian")
