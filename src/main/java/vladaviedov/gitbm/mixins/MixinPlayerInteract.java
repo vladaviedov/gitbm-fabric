@@ -14,6 +14,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.LoreComponent;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
@@ -112,15 +114,9 @@ public abstract class MixinPlayerInteract extends LivingEntity {
 			itemStack.set(Components.INSTANCE.getEntityDataComponent(), NbtComponent.of(entityData));
 		}
 
-		// if (item == ItemList.INSTANCE.getGeneric()) {
-		// 	NbtCompound display = new NbtCompound();
-		// 	NbtList lore = new NbtList();
-
-		// 	NbtString name = NbtString.of("\"" + ent.getName().getString() + "\"");
-		// 	lore.add(name);
-		// 	display.put("Lore", lore);
-		// 	itemStack.setSubNbt("display", display);
-		// }
+		if (item == ItemList.INSTANCE.getGeneric()) {
+			itemStack.apply(DataComponentTypes.LORE, LoreComponent.DEFAULT, lore -> lore.with(ent.getName()));
+		}
 
 		return itemStack;
 	}
