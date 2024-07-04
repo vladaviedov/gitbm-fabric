@@ -1,6 +1,6 @@
 plugins {
     id("fabric-loom")
-	id("com.diffplug.spotless") version "6.19.0"
+	id("com.diffplug.spotless") version "6.25.0"
     val kotlinVersion: String by System.getProperties()
     kotlin("jvm").version(kotlinVersion)
 }
@@ -50,7 +50,7 @@ dependencies {
 }
 
 tasks {
-    val javaVersion = JavaVersion.VERSION_17
+    val javaVersion = JavaVersion.VERSION_21
 
     withType<JavaCompile> {
         options.encoding = "UTF-8"
