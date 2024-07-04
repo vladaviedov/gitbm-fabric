@@ -1,10 +1,7 @@
 package vladaviedov.gitbm
 
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.entity.EntityType
 import net.minecraft.item.Item
-import net.minecraft.item.ItemGroups
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.util.Identifier
@@ -13,11 +10,11 @@ import vladaviedov.gitbm.item.VanillaBucketOf
 
 object ItemList {
 	private val itemLookup = HashMap<EntityType<in Nothing>, Item>()
-	public val generic = BucketOf(FabricItemSettings().maxCount(1))
+	public val generic = BucketOf(Item.Settings().maxCount(1))
 
 	public fun registerItems() {
 		// Bucket of Entity
-		Registry.register(Registries.ITEM, Identifier(Constants.MOD_ID, "bucket_of_entity"), generic)
+		Registry.register(Registries.ITEM, Identifier.tryParse(Constants.MOD_ID, "bucket_of_entity"), generic)
 
 		// Passive mobs
 		makeItem(EntityType.ALLAY, "bucket_of_allay")
@@ -114,10 +111,12 @@ object ItemList {
 		return item
 	}
 
-	private fun makeItem(type: EntityType<in Nothing>, name: String) {
-		val item = VanillaBucketOf(FabricItemSettings().maxCount(1), type)
-		Registry.register(Registries.ITEM, Identifier(Constants.MOD_ID, name), item)
-		ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register({ group -> group.add(item) })
+	private fun makeItem(
+		type: EntityType<in Nothing>,
+		name: String,
+	) {
+		val item = VanillaBucketOf(Item.Settings().maxCount(1), type)
+		Register.newItem(name, item)
 		itemLookup.put(type, item)
 	}
 }

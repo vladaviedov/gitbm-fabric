@@ -1,6 +1,5 @@
 package vladaviedov.gitbm.item
 
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
@@ -16,11 +15,15 @@ import net.minecraft.util.TypedActionResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.RaycastContext
 import net.minecraft.world.World
-import vladaviedov.gitbm.Constants
+import vladaviedov.gitbm.Components
 import java.util.UUID
 
-open class BucketOf(props: FabricItemSettings) : Item(props) {
-	override fun use(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
+open class BucketOf(props: Item.Settings) : Item(props) {
+	override fun use(
+		world: World,
+		player: PlayerEntity,
+		hand: Hand,
+	): TypedActionResult<ItemStack> {
 		val heldItem = player.getStackInHand(hand)
 		val trace = raycast(world, player, RaycastContext.FluidHandling.ANY)
 		var targetPos = trace.blockPos
@@ -59,8 +62,13 @@ open class BucketOf(props: FabricItemSettings) : Item(props) {
 		return TypedActionResult(ActionResult.SUCCESS, heldItem)
 	}
 
-	protected open fun placeEntity(world: ServerWorld, item: ItemStack, pos: BlockPos, player: PlayerEntity) {
-		val entityData: NbtCompound? = item.getSubNbt(Constants.DATA_TAG)
+	protected open fun placeEntity(
+		world: ServerWorld,
+		item: ItemStack,
+		pos: BlockPos,
+		player: PlayerEntity,
+	) {
+		val entityData: NbtCompound? = item.get(Components.EntityDataComponent)?.copyNbt()
 		if (entityData == null) {
 			return
 		}

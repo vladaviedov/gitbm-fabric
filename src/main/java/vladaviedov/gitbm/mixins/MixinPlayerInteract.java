@@ -14,8 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.nbt.NbtString;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -25,8 +24,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import vladaviedov.gitbm.Constants;
 import vladaviedov.gitbm.ItemList;
+import vladaviedov.gitbm.Components;
 
 @Mixin(PlayerEntity.class)
 public abstract class MixinPlayerInteract extends LivingEntity {
@@ -108,20 +107,20 @@ public abstract class MixinPlayerInteract extends LivingEntity {
 	private ItemStack serializeEntToItem(Item item, Entity ent) {
 		ItemStack itemStack = new ItemStack(item);
 		NbtCompound entityData = new NbtCompound();
+
 		if (ent.saveSelfNbt(entityData)) {
-			itemStack.setSubNbt(Constants.DATA_TAG, entityData);
+			itemStack.set(Components.INSTANCE.getEntityDataComponent(), NbtComponent.of(entityData));
 		}
-		itemStack.setSubNbt(Constants.UUID_TAG, NbtString.of(ent.getUuidAsString()));
 
-		if (item == ItemList.INSTANCE.getGeneric()) {
-			NbtCompound display = new NbtCompound();
-			NbtList lore = new NbtList();
+		// if (item == ItemList.INSTANCE.getGeneric()) {
+		// 	NbtCompound display = new NbtCompound();
+		// 	NbtList lore = new NbtList();
 
-			NbtString name = NbtString.of("\"" + ent.getName().getString() + "\"");
-			lore.add(name);
-			display.put("Lore", lore);
-			itemStack.setSubNbt("display", display);
-		}
+		// 	NbtString name = NbtString.of("\"" + ent.getName().getString() + "\"");
+		// 	lore.add(name);
+		// 	display.put("Lore", lore);
+		// 	itemStack.setSubNbt("display", display);
+		// }
 
 		return itemStack;
 	}
